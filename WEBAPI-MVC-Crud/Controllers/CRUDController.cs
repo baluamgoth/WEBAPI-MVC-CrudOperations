@@ -51,5 +51,26 @@ namespace WEBAPI_MVC_Crud.Controllers
             }
             return View("Create");
         }
+
+        public ActionResult Details(int id)
+        {
+            EmpClass empObj = null;
+
+            HttpClient hc = new HttpClient();
+            hc.BaseAddress = new Uri("http://localhost:53465/api/");
+
+            var consumeapi = hc.GetAsync("EmpCrud?id="+id.ToString());
+            consumeapi.Wait();
+
+            var readdata = consumeapi.Result;
+            if (readdata.IsSuccessStatusCode)
+            {
+                var displaydata = readdata.Content.ReadAsAsync<EmpClass>();
+                displaydata.Wait();
+                empObj = displaydata.Result;
+            }
+            return View(empObj);
+
+        }
     }
 }

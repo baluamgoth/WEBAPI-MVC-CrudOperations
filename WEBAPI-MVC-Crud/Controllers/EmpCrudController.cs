@@ -23,5 +23,24 @@ namespace WEBAPI_MVC_Crud.Controllers
             cm.SaveChanges();
             return Ok();
         }
+
+        public IHttpActionResult GetEmpid(int id)
+        {
+            EmpClass empdetails = null;
+            empdetails = cm.Newempregs.Where(x => x.Empid == id).Select(x => new EmpClass
+            {
+                Empid = x.Empid,
+                Empname = x.Empname,
+                Empemail = x.Empemail,
+                Emplocation = x.Emplocation,
+                EmpDesignation = x.EmpDesignation,
+            }).FirstOrDefault<EmpClass>();
+
+            if (empdetails == null)
+            {
+                return NotFound();
+            }
+            return Ok(empdetails);
+        }
     }
 }
