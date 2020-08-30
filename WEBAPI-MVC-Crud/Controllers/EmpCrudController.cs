@@ -10,11 +10,18 @@ namespace WEBAPI_MVC_Crud.Controllers
 {
     public class EmpCrudController : ApiController
     {
+        cmEntities cm = new cmEntities();
         public IHttpActionResult getemp()
-        {
-            cmEntities cm = new cmEntities();
+        {  
             var results = cm.Newempregs.ToList();
             return Ok(results);
+        }
+        [HttpPost]
+        public IHttpActionResult empinsert(Newempreg empinsert)
+        {
+            cm.Newempregs.Add(empinsert);
+            cm.SaveChanges();
+            return Ok();
         }
     }
 }
