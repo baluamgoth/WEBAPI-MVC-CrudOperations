@@ -112,5 +112,21 @@ namespace WEBAPI_MVC_Crud.Controllers
             }
             return View(ec);
         }
+
+        public ActionResult Delete(int id)
+        {
+            HttpClient hc = new HttpClient();
+            hc.BaseAddress = new Uri("http://localhost:53465/api/EmpCrud");
+
+            var delrecord = hc.DeleteAsync("EmpCrud/" + id.ToString());
+            delrecord.Wait();
+
+            var displaydatadel = delrecord.Result;
+            if (displaydatadel.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View("Index");
+        }
     }
 }

@@ -62,5 +62,13 @@ namespace WEBAPI_MVC_Crud.Controllers
             }
             return Ok();
         }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var empdelete = cm.Newempregs.Where(x => x.Empid == id).FirstOrDefault();
+            cm.Entry(empdelete).State = System.Data.Entity.EntityState.Deleted;
+            cm.SaveChanges();
+            return Ok();
+        }
     }
 }
