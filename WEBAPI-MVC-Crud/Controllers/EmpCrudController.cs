@@ -42,5 +42,25 @@ namespace WEBAPI_MVC_Crud.Controllers
             }
             return Ok(empdetails);
         }
+
+        public IHttpActionResult Put(EmpClass ec)
+        {
+            var updateemp = cm.Newempregs.Where(x => x.Empid == ec.Empid).FirstOrDefault<Newempreg>();
+            if (updateemp != null)
+            {
+                updateemp.Empid = ec.Empid;
+                updateemp.Empname = ec.Empname;
+                updateemp.Empemail = ec.Empemail;
+                updateemp.Emplocation = ec.Emplocation;
+                updateemp.EmpDesignation = ec.EmpDesignation;
+
+                cm.SaveChanges();
+            }
+            else
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }
